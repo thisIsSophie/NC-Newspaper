@@ -13,7 +13,7 @@ function Articles({ articles }) {
     <VStack spacing={8} align="stretch">
       {articles.map((article) => {
         return (
-          <Container key={article.id} p={4} variant="outlined">
+          <Container key={article.article_id} p={4} variant="outlined">
             <HStack>
               <Image
                 width={250}
@@ -28,7 +28,11 @@ function Articles({ articles }) {
                 <Text fontSize="lg" fontWeight="bold" mt={2}>
                   {article.title}
                 </Text>
-                <Link mt={2} color="blue" href={"/articles/${:article_id}"}>
+                <Link
+                  mt={2}
+                  color="blue"
+                  href={`/articles/${article.article_id}`}
+                >
                   view full article
                 </Link>
               </VStack>
