@@ -1,12 +1,4 @@
-import {
-  HStack,
-  Image,
-  VStack,
-  Link,
-  Tag,
-  Text,
-  Container,
-} from "@chakra-ui/react";
+import { HStack, Image, VStack, Link, Tag, Container } from "@chakra-ui/react";
 
 function Articles({ articles }) {
   return (
@@ -25,9 +17,16 @@ function Articles({ articles }) {
                 <Tag mt={2} colorScheme="red">
                   {article.topic}
                 </Tag>
-                <Text fontSize="lg" fontWeight="bold" mt={2}>
+                <Link
+                  fontSize="xl"
+                  href={`/articles/${article.article_id}`}
+                  lineHeight={1.2}
+                  fontWeight="bold"
+                  w="100%"
+                  _hover={{ color: "blue.400", textDecoration: "underline" }}
+                >
                   {article.title}
-                </Text>
+                </Link>
                 <Link
                   mt={2}
                   color="blue"
