@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Articles from "./Articles";
+import { getArticles } from "../api/articles";
+import { Spinner } from "@chakra-ui/react";
 
 function ArticlesPage() {
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("https://news-api-eben.onrender.com/api/articles")
-      .then((response) => {
-        setArticles(response.data.articles);
-      });
+    setIsLoading(true);
+    getArticles().then((result) => {
+      setIsLoading(false);
+      setArticles(result);
+    });
   }, []);
 
-  return <Articles articles={articles} />;
+  return isLoading ? <Spinner /> : <Articles articles={articles} />;
 }
 export default ArticlesPage;

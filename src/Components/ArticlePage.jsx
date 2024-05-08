@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Article from "./Article";
 import { useParams } from "react-router-dom";
-import { Button, Link, VStack } from "@chakra-ui/react";
+import { Button, VStack } from "@chakra-ui/react";
+import Comments from "./Comments";
 
 function ArticlePage() {
   const [article, setArticle] = useState(undefined);
@@ -18,7 +19,12 @@ function ArticlePage() {
   }, []);
   return (
     <VStack>
-      {article ? <Article article={article} /> : null}
+      {article ? (
+        <>
+          <Article article={article} />
+          <Comments article_id={article.article_id} />
+        </>
+      ) : null}
       <Button onClick={() => (window.location.href = "/")}>Back</Button>
     </VStack>
   );
