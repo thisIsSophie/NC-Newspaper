@@ -1,19 +1,11 @@
-import {
-  HStack,
-  Image,
-  VStack,
-  Link,
-  Tag,
-  Text,
-  Container,
-} from "@chakra-ui/react";
+import { HStack, Image, VStack, Link, Tag, Container } from "@chakra-ui/react";
 
 function Articles({ articles }) {
   return (
     <VStack spacing={8} align="stretch">
       {articles.map((article) => {
         return (
-          <Container key={article.id} p={4} variant="outlined">
+          <Container key={article.article_id} p={4} variant="outlined">
             <HStack>
               <Image
                 width={250}
@@ -25,10 +17,21 @@ function Articles({ articles }) {
                 <Tag mt={2} colorScheme="red">
                   {article.topic}
                 </Tag>
-                <Text fontSize="lg" fontWeight="bold" mt={2}>
+                <Link
+                  fontSize="xl"
+                  href={`/articles/${article.article_id}`}
+                  lineHeight={1.2}
+                  fontWeight="bold"
+                  w="100%"
+                  _hover={{ color: "blue.400", textDecoration: "underline" }}
+                >
                   {article.title}
-                </Text>
-                <Link mt={2} color="blue" href={"/articles/${:article_id}"}>
+                </Link>
+                <Link
+                  mt={2}
+                  color="blue"
+                  href={`/articles/${article.article_id}`}
+                >
                   view full article
                 </Link>
               </VStack>

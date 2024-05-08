@@ -12,7 +12,6 @@ function ArticlesPage() {
         setArticles(response.data.articles);
       });
   }, []);
-  console.log(articles);
 
   return <Articles articles={articles} />;
 }
