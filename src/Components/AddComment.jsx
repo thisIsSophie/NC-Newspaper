@@ -7,55 +7,60 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { postComment } from "../api/comments";
 
-function AddComment({ handleComment, error }) {
+function AddComment({ handleComment, article_id }) {
   const [username, setUsername] = useState("");
   const [body, setBody] = useState("");
 
-  const [isUsernameError, setIsUsernameError] = useState(false);
-  const [isBodyError, setIsBodyError] = useState(false);
+  const [usernameError, setUsernameError] = useState(undefined);
+  const [bodyError, setBodyError] = useState(undefined);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!username) setIsUsernameError(true);
-    if (!body) setIsBodyError(true);
+    if (!username) setUsernameError("Username is required");
+    if (!body) setBodyError("Comment is required");
 
     if (!username || !body) return;
 
-    handleComment({ username, body });
-    setUsername("");
-    setBody("");
-    setIsUsernameError(false);
-    setIsBodyError(false);
+    postComment(article_id, { username, body })
+      .then((result) => {
+        toast.success("Comment posted successfully!");
+        handleComment(result);
+        setUsername("");
+        setBody("");
+        setUsernameError(undefined);
+        setBodyError(undefined);
+      })
+      .catch(() => {
+        const errorMessage = "User does not exist";
+        setUsernameError(errorMessage);
+      });
   };
 
   return (
-    <FormControl isInvalid={isUsernameError || isBodyError} width={600}>
+    <FormControl isInvalid={usernameError || bodyError} width={600}>
       <VStack>
         <Input
           placeholder="Your username"
           value={username}
           onChange={(event) => {
             setUsername(event.target.value);
-            setIsUsernameError(false);
+            setUsernameError(undefined);
           }}
         />
-        {isUsernameError && (
-          <FormErrorMessage>Username is required</FormErrorMessage>
-        )}
-        {error && <Text color={"red"}>{error}</Text>}
+        {usernameError && <FormErrorMessage>{usernameError}</FormErrorMessage>}
 
         <Input
           placeholder="Your comment"
           value={body}
           onChange={(event) => {
             setBody(event.target.value);
-            setIsBodyError(false);
+            setBodyError(undefined);
           }}
         />
-        {isBodyError && (
-          <FormErrorMessage>Comment is required</FormErrorMessage>
-        )}
+        {bodyError && <FormErrorMessage>{bodyError}</FormErrorMessage>}
         <Button type="submit" onClick={handleSubmit}>
           Add Comment
         </Button>
