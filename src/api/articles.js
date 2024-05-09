@@ -7,3 +7,11 @@ export const getArticles = () => {
       return response.data.articles;
     });
 };
+
+export const patchArticle = (articleId, data) => {
+  return axios
+    .patch(`https://news-api-eben.onrender.com/api/articles/${articleId}`, data)
+    .then((response) => {
+      return response.data.article;
+    });
+};
