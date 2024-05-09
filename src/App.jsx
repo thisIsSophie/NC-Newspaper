@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import ArticlesPage from "./Components/ArticlesPage";
 import theme from "./theme";
 import ArticlePage from "./Components/ArticlePage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
           <Route path="/articles/:article_id" element={<ArticlePage />} />
         </Routes>
       </div>
+      <ToastContainer />
     </ChakraProvider>
   );
 }
