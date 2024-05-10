@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { postComment } from "../api/comments";
 
 function AddComment({ handleComment, article_id }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [username, setUsername] = useState("");
   const [body, setBody] = useState("");
 
@@ -24,6 +25,8 @@ function AddComment({ handleComment, article_id }) {
 
     if (!username || !body) return;
 
+    setIsSubmitting(true);
+
     postComment(article_id, { username, body })
       .then((result) => {
         toast.success("Comment posted successfully!");
@@ -36,11 +39,18 @@ function AddComment({ handleComment, article_id }) {
       .catch(() => {
         const errorMessage = "User does not exist";
         setUsernameError(errorMessage);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
   };
 
   return (
-    <FormControl isInvalid={usernameError || bodyError} width={600}>
+    <FormControl
+      isDisabled={isSubmitting}
+      isInvalid={usernameError || bodyError}
+      width={600}
+    >
       <VStack>
         <Input
           placeholder="Your username"
@@ -61,7 +71,12 @@ function AddComment({ handleComment, article_id }) {
           }}
         />
         {bodyError && <FormErrorMessage>{bodyError}</FormErrorMessage>}
-        <Button type="submit" onClick={handleSubmit}>
+        <Button
+          type="submit"
+          onClick={handleSubmit}
+          isDisabled={isSubmitting}
+          isLoading={isSubmitting}
+        >
           Add Comment
         </Button>
       </VStack>

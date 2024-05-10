@@ -20,3 +20,9 @@ export const postComment = (articleId, data) => {
       return response.data.comment;
     });
 };
+
+export const deleteComment = (commentId) => {
+  return axios.delete(
+    `https://news-api-eben.onrender.com/api/comments/${commentId}`
+  );
+};
