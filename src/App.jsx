@@ -7,6 +7,10 @@ import ArticlePage from "./Components/ArticlePage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+export const LOGGED_IN_USER = {
+  username: "grumpy19",
+};
+
 function App() {
   return (
     <ChakraProvider theme={theme}>
